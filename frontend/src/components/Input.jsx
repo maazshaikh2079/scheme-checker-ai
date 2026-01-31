@@ -54,7 +54,8 @@ const Input = ({ setResults, setLoading, loading }) => {
       setResults(response.data);
     } catch (error) {
       console.error("API Error:", error);
-      alert("Failed to fetch schemes. Is the backend running on port 5000?");
+      alert(`API Error: ${error}`)
+    //   alert("Failed to fetch schemes. Is the backend running on port 5000?");
     } finally {
       setLoading(false);
     }
