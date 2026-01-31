@@ -135,7 +135,6 @@ Tests the system's ability to deny poverty-based benefits to high earners.
 
 * **Expected Result:** `eligible_schemes` array should be **empty**, with detailed rejection notices.
 
-```
 
 ### Why include this?
 * **Demonstrates Robustness:** It proves you have accounted for edge cases.
