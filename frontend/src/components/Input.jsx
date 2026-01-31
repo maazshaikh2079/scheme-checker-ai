@@ -9,10 +9,8 @@ const Input = ({ setResults, setLoading, loading }) => {
     occupation: ''
   });
 
-  // New state to track if "Other" is selected
   const [isOther, setIsOther] = useState(false);
 
-  // Pre-defined list to check against
   const occupationOptions = [
     "Student",
     "Artisan",
@@ -23,20 +21,18 @@ const Input = ({ setResults, setLoading, loading }) => {
     "Software Engineer (Test)"
   ];
 
-  // Generic handler for text inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Specific handler for the Dropdown logic
   const handleDropdownChange = (e) => {
     const value = e.target.value;
     if (value === 'Other') {
       setIsOther(true);
-      setFormData({ ...formData, occupation: '' }); // Clear value so user can type
+      setFormData({ ...formData, occupation: '' });
     } else {
       setIsOther(false);
-      setFormData({ ...formData, occupation: value }); // Set selected value
+      setFormData({ ...formData, occupation: value });
     }
   };
 
@@ -50,7 +46,7 @@ const Input = ({ setResults, setLoading, loading }) => {
         age: Number(formData.age),
         income: Number(formData.income),
         state: formData.state,
-        occupation: formData.occupation // This will now hold either the dropdown value or typed value
+        occupation: formData.occupation
       };
 
     //   const response = await axios.post('http://localhost:5000/api/check-eligibility', payload);
@@ -126,10 +122,9 @@ const Input = ({ setResults, setLoading, loading }) => {
           {/* The Select Box */}
           <select
             name="occupationSelect"
-            // If isOther is true, force value to 'Other', else show the actual occupation
             value={isOther ? 'Other' : formData.occupation}
             onChange={handleDropdownChange}
-            required={!isOther} // Only required if we aren't typing manually
+            required={!isOther}
             className="w-full p-2 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 outline-none bg-white mb-2"
           >
             <option value="">Select Occupation</option>
@@ -139,7 +134,6 @@ const Input = ({ setResults, setLoading, loading }) => {
             <option value="Other" className="font-bold text-orange-600">+ Other (Type Manually)</option>
           </select>
 
-          {/* Conditional Input Field for 'Other' */}
           {isOther && (
             <div className="animate-fade-in-down">
               <input
@@ -159,7 +153,6 @@ const Input = ({ setResults, setLoading, loading }) => {
           )}
         </div>
 
-        {/* Action Button */}
         <button
           type="submit"
           disabled={loading}

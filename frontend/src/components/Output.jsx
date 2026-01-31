@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Output = ({ data, loading }) => {
-  // 1. Loading State
   if (loading) {
     return (
       <div className="bg-white p-12 rounded-xl shadow border border-slate-200 text-center animate-pulse">
@@ -12,7 +11,6 @@ const Output = ({ data, loading }) => {
     );
   }
 
-  // 2. Empty State (Before search)
   if (!data) {
     return null;
   }
@@ -24,13 +22,11 @@ const Output = ({ data, loading }) => {
 
   return (
     <div className="space-y-6 animate-fade-in-up">
-      {/* SECTION A: User Summary */}
       <div className="bg-blue-50 border-l-4 border-blue-900 p-4 rounded shadow-sm">
         <h3 className="font-bold text-blue-900 text-sm uppercase mb-1">User Summary</h3>
         <p className="text-slate-800">{data.user_summary}</p>
       </div>
 
-      {/* SECTION B: Eligible Schemes (Cards) */}
       <div>
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center">
           Eligible Schemes
@@ -71,7 +67,6 @@ const Output = ({ data, loading }) => {
         )}
       </div>
 
-      {/* SECTION C: Not Eligible Notices */}
       {data.not_eligible_notices?.length > 0 && (
         <div className="bg-slate-50 rounded-lg border border-slate-200 p-5">
           <h3 className="font-bold text-slate-600 text-sm uppercase mb-3">Not Eligible Notices</h3>
@@ -86,7 +81,6 @@ const Output = ({ data, loading }) => {
         </div>
       )}
 
-      {/* SECTION D: Disclaimer */}
       <p className="text-xs text-slate-400 text-center mt-8">
         {data.disclaimer}
       </p>

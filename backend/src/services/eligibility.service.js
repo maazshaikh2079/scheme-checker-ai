@@ -1,21 +1,14 @@
 import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the client once outside the function for performance
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
-/**
- * Industry Standard Eligibility Service
- * Uses Gemini 2.5 Flash for high-speed welfare mapping.
- */
 const getEligibilityResults = async (userData) => {
-  // Model selection: 2.5 Flash is the stable 2026 workhorse
   const model = "gemini-2.5-flash";
 
   const config = {
-    // System Instructions go inside the config object
     systemInstruction: `
         # ROLE
         You are the "Bharat Welfare Expert," a high-precision AI specialized in Indian Government Scheme Eligibility. Your goal is to map user demographics to specific welfare benefits with 100% logical accuracy.
@@ -67,7 +60,7 @@ const getEligibilityResults = async (userData) => {
           "disclaimer": "Standard government info disclaimer"
         }
     `,
-    temperature: 0.1, // Lower temperature for consistent logical reasoning
+    temperature: 0.1,
   };
 
   const contents = [
@@ -88,9 +81,7 @@ const getEligibilityResults = async (userData) => {
       contents,
     });
 
-    const text = response.text; // Direct property access in latest SDK
-
-    // Clean and Parse JSON (Handles potential markdown backticks from AI)
+    const text = response.text;
     const cleanJson = text.replace(/```json|```/g, "").trim();
     return JSON.parse(cleanJson);
   } catch (error) {
@@ -117,14 +108,12 @@ export const checkEligibility = async (req, res) => {
   try {
     const { age, income, state, occupation } = req.body;
 
-    // 1. Basic Validation
     if (!age || income === undefined || !state || !occupation) {
       return res.status(400).json({
         error: "Missing required fields: age, income, state, or occupation.",
       });
     }
 
-    // 2. Call the Service (The AI Brain)
     const results = await getEligibilityResults({
       age,
       income,
@@ -132,7 +121,6 @@ export const checkEligibility = async (req, res) => {
       occupation,
     });
 
-    // 3. Return the AI-generated JSON
     return res.status(200).json(results);
   } catch (error) {
     console.error("Route Error:", error.message);

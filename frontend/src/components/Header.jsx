@@ -12,7 +12,6 @@ const Header = () => {
             Government Scheme Eligibility Checker
           </p>
         </div>
-        {/* Optional: Add an official emblem or logo here */}
         <div className="hidden md:block text-right">
           <span className="bg-white/10 px-3 py-1 rounded text-sm">
             Beta v1.0

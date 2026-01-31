@@ -1,20 +1,16 @@
-import "dotenv/config"; // Loads your GEMINI_API_KEY from .env
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import morgan from "morgan"; // Industry-standard logging
+import morgan from "morgan";
 
 const app = express();
 
-// --- 1. Middleware ---
-// Allows your React frontend to communicate with this backend
+// Middleware
 app.use(cors());
-// Industry-standard logger: shows every request in your terminal
 app.use(morgan("dev"));
-// Essential: Parses incoming JSON so you can read req.body
 app.use(express.json());
 
-// --- 2. Routes ---
-// Default display route
+// Routes
 app.get("/", (_, res) =>
   res.send(`
     <title>Bharat Welfare Server</title>
@@ -23,22 +19,17 @@ app.get("/", (_, res) =>
     <body>
   `)
 );
-
-// Favicon error handler route
 app.get("/favicon.ico", (_, res) => res.status(204).end());
 
-// Import your eligibility routes
 import eligibilityRoutes from "./routes/eligibility.routes.js";
-
-// Mount the eligibility routes under the /api prefix
 app.use("/api", eligibilityRoutes);
 
-// Health check endpoint (Industry standard for monitoring)
+// Health check endpoint
 app.get("/status", (_, res) => {
   res.json({ status: "Online", timestamp: new Date().toISOString() });
 });
 
-// --- 3. Server Initialization ---
+// Server Initialization
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Bharat Welfare Server running on http://localhost:${PORT}`);

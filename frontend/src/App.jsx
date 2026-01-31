@@ -13,10 +13,7 @@ function App() {
       <Header />
 
       <main className="flex-grow container mx-auto px-4 py-8 space-y-8 max-w-4xl">
-        {/* Pass state setters to Input */}
         <Input setResults={setResults} setLoading={setLoading} loading={loading} />
-
-        {/* Pass data to Output */}
         <Output data={results} loading={loading} />
       </main>
 
